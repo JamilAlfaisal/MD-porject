@@ -48,7 +48,7 @@ class _StoreScreenState extends ConsumerState<StoreScreen> {
             onTap: (){
               //ref.read(appDataProvider.notifier).updateData(5, 1000);
               if (appData.rubies>=100){
-                ref.read(appDataProvider.notifier).updateData(appData.hearts+1,appData.rubies-100,false,false);
+                ref.read(appDataProvider.notifier).updateData(appData.hearts+1,appData.rubies-100,appData.isBlueSold,appData.isPurpleSold);
               }else{
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
@@ -64,7 +64,7 @@ class _StoreScreenState extends ConsumerState<StoreScreen> {
               onTap: (){
                 //ref.read(appDataProvider.notifier).updateData(5, 1000);
                 if (appData.rubies>=200){
-                  ref.read(appDataProvider.notifier).updateData(appData.hearts+2,appData.rubies-200,false,false);
+                  ref.read(appDataProvider.notifier).updateData(appData.hearts+2,appData.rubies-200,appData.isBlueSold,appData.isPurpleSold);
                 }else{
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
@@ -80,7 +80,7 @@ class _StoreScreenState extends ConsumerState<StoreScreen> {
               onTap: (){
                 //ref.read(appDataProvider.notifier).updateData(5, 1000);
                 if (appData.rubies>=300){
-                  ref.read(appDataProvider.notifier).updateData(appData.hearts+3,appData.rubies-300,false,false);
+                  ref.read(appDataProvider.notifier).updateData(appData.hearts+3,appData.rubies-300,appData.isBlueSold,appData.isPurpleSold);
                 }else{
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
@@ -96,7 +96,7 @@ class _StoreScreenState extends ConsumerState<StoreScreen> {
               onTap: (){
                 //ref.read(appDataProvider.notifier).updateData(5, 1000);
                 if (appData.rubies>=400){
-                  ref.read(appDataProvider.notifier).updateData(appData.hearts+5,appData.rubies-400,false,false);
+                  ref.read(appDataProvider.notifier).updateData(appData.hearts+5,appData.rubies-400,appData.isBlueSold,appData.isPurpleSold);
                 }else{
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
