@@ -7,6 +7,8 @@ import 'package:untitled/widgets/app_bar_widget.dart';
 import 'package:untitled/WordTranslation.dart';
 import 'package:untitled/providers/appData.dart';
 
+import 'matching_screen.dart';
+
 class SelectScreen extends StatefulWidget{
   const SelectScreen({super.key});
 
@@ -15,7 +17,7 @@ class SelectScreen extends StatefulWidget{
 }
 
 class _SelectScreenState extends State<SelectScreen> {
-  List<WordTranslation>words = [WordTranslation("hello", "Hola"),WordTranslation("goodbye", "adiós"),WordTranslation("h", "a"),WordTranslation("s", "w"),WordTranslation("hello", "Hola"),WordTranslation("goodbye", "adiós"),WordTranslation("h", "a"),WordTranslation("s", "w")];
+
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
@@ -61,9 +63,9 @@ class _SelectScreenState extends State<SelectScreen> {
        ),
                Expanded(
                  child: ListView.builder(
-                      itemCount: words.length,
+                      itemCount: appData.words.length,
                      itemBuilder: (context,index){
-                        return WordBox(word: words[index]);
+                        return WordBox(word: appData.words[index]);
                      }),
                ),
         addBox()
@@ -83,6 +85,21 @@ class examType extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: (){
+        if(type == "Random"){
+          appData.selected = appData.words;
+          appData.selected.shuffle();
+          Navigator.pushReplacement(context, MaterialPageRoute(
+              builder: (context) => Matching()
+          ));}
+        else{
+          if(appData.selected[0]!=null){
+          Navigator.pushReplacement(context, MaterialPageRoute(
+              builder: (context) => Matching()
+          ));}
+        }
+
+      },
         child: Container(
           padding: EdgeInsets.all(10),
           color: Theme.of(context).colorScheme.primary,
@@ -114,7 +131,6 @@ class _WordBoxState extends State<WordBox> {
           click = !click;
           if(click){
           appData.selected.add(widget.word);
-          print(appData.selected);
 
           }
           if(!click){
@@ -157,12 +173,21 @@ class _WordBoxState extends State<WordBox> {
   }
 
 }
-class addBox extends StatelessWidget {
+class addBox extends StatefulWidget {
+  @override
+  State<addBox> createState() => _addBoxState();
+}
+
+class _addBoxState extends State<addBox> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        openDialog(context);
+      onTap: () async{
+        setState(() {
+
+          openDialog(context);
+        });
+
       },
       child: Container(
         alignment: Alignment.center,
@@ -175,28 +200,55 @@ class addBox extends StatelessWidget {
     ));
   }
 }
-Future<void> openDialog(BuildContext context) {
-  final textController = TextEditingController();
+Future<Map<String, String>?> openDialog(BuildContext context) {
+  final firstController = TextEditingController();
+  final secondController = TextEditingController();
 
-  return showDialog(
+  return showDialog<Map<String, String>>(
     context: context,
     builder: (context) => AlertDialog(
-      title: Text("Enter a word"),
-      content: TextField(
-        controller: textController,
-        decoration: InputDecoration(hintText: 'Enter a word'),
+      backgroundColor: Theme.of(context).colorScheme.secondary,
+      title: Text("Enter details",style: Theme.of(context).textTheme.titleLarge,),
+      content: Column(
+        mainAxisSize: MainAxisSize.min, // Makes the column take only needed space
+        children: [
+          TextField(
+            style: Theme.of(context).textTheme.labelMedium,
+            controller: firstController,
+            decoration: const InputDecoration(
+              hintText: 'Word',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          const SizedBox(height: 10),
+          TextField(
+            style: Theme.of(context).textTheme.labelMedium,
+            controller: secondController,
+            decoration: const InputDecoration(
+              hintText: 'Translation',
+              border: OutlineInputBorder(),
+            ),
+          ),
+        ],
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text('Cancel'),
+          child: const Text('Cancel'),
         ),
         TextButton(
           onPressed: () {
-            final enteredText = textController.text;
-            Navigator.pop(context, enteredText); // Return the entered text
+            appData.words.add(WordTranslation(firstController.text.toString(),secondController.text.toString()));
+
+            Navigator.pop(
+              context,
+              {
+                'first': firstController.text,
+                'second': secondController.text,
+              },
+            );
           },
-          child: Text('OK'),
+          child: const Text('Submit'),
         ),
       ],
     ),
