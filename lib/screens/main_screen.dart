@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:untitled/WordTranslation.dart';
-import 'package:untitled/screens/flash_cards_screen.dart';
+//import 'package:untitled/WordTranslation.dart';
+//import 'package:untitled/screens/flash_cards_screen.dart';
 import 'package:untitled/screens/select_screen.dart';
-import 'package:untitled/screens/spelling_screen.dart';
+//import 'package:untitled/screens/spelling_screen.dart';
 import 'package:untitled/screens/store_screen.dart';
 
 class MainScreen extends StatelessWidget {
@@ -31,7 +31,7 @@ class MainScreen extends StatelessWidget {
             IconCard(
               onTap: () {
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => SelectScreen()));
+                    MaterialPageRoute(builder: (context) => SelectScreen(screen: "M",)));
               },
               text: "Matching",
               imagePath: "lib/assets/images/match.png",
@@ -41,26 +41,7 @@ class MainScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => FlashCardsScreen(
-                      words: [
-                        WordTranslation(
-                          "cart",
-                          "Auto"
-                        ),
-                        WordTranslation(
-                            "child",
-                            "Kid"
-                        ),
-                        WordTranslation(
-                            "Cat",
-                            "Caze"
-                        ),
-                        WordTranslation(
-                            "Cheese",
-                            "Kaze"
-                        ),
-                      ],
-                    ),
+                    builder: (context) => SelectScreen(screen: "F",),
                   ),
                 );
               },
@@ -78,26 +59,7 @@ class MainScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => SpellingScreen(
-                      words: [
-                        WordTranslation(
-                            "cat",
-                            "Auto"
-                        ),
-                        WordTranslation(
-                            "child",
-                            "Kid"
-                        ),
-                        WordTranslation(
-                            "Cat",
-                            "Caze"
-                        ),
-                        WordTranslation(
-                            "Cheese",
-                            "Kaze"
-                        ),
-                      ],
-                    ),
+                    builder: (context) => SelectScreen(screen: "S",),
                   ),
                 );
               },

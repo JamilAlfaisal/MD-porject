@@ -4,11 +4,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:untitled/WordTranslation.dart';
 import 'package:untitled/widgets/app_bar_widget.dart';
 import 'package:untitled/providers/appbar_provider.dart';
+import 'package:untitled/providers/appData.dart';
 
 class SpellingScreen extends ConsumerStatefulWidget {
-  final List<WordTranslation> words;
-
-  const SpellingScreen({super.key, required this.words});
+  const SpellingScreen({super.key});
 
   @override
   ConsumerState<SpellingScreen> createState() => _SpellingScreenState();
@@ -27,12 +26,31 @@ class _SpellingScreenState extends ConsumerState<SpellingScreen> {
   }
 
   void nextCard() {
-    if (_textController.text.toLowerCase() == widget.words[index].translation.toLowerCase()) {
+    if (_textController.text.toLowerCase() == appData.words[index].translation.toLowerCase()) {
       setState(() {
-        index = index + 1;
         _textController.clear();
         updateRuby(100);
         rubies = rubies + 100;
+        if(index < appData.words.length-1){
+          index = index + 1;
+        }else{
+          final appData = ref.watch(appDataProvider);
+          ref.read(appDataProvider.notifier).updateData(appData.hearts,appData.rubies+rubies,appData.isBlueSold,appData.isPurpleSold);
+          if(!mounted) return;
+          showDialog(
+            context: context,
+            barrierDismissible: false, // User must tap button
+            builder: (context) => GameOverDialog(
+              message: "You Gain: $rubies Rubies",
+              buttonText: "Exit",
+              onButtonPressed: () {
+                Navigator.pop(context); // Close dialog
+                Navigator.pop(context);
+                // Add your restart logic here
+              },
+            ),
+          );
+        }
       });
       _showSnackBar('Correct', true);
     } else {
@@ -115,7 +133,7 @@ Future<void> updateRuby(int heart) async {
             ),
             child: Center(
               child: Text(
-                widget.words[index].word,
+                appData.words[index].word,
                 style: Theme.of(context).textTheme.labelMedium,
               ),
             ),

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:untitled/WordTranslation.dart';
+//import 'package:untitled/WordTranslation.dart';
 import 'package:untitled/widgets/app_bar_widget.dart';
+import 'package:untitled/providers/appData.dart';
 
 class FlashCardsScreen extends StatefulWidget {
-  final List<WordTranslation> words;
 
-  const FlashCardsScreen({super.key, required this.words});
+  const FlashCardsScreen({super.key});
 
   @override
   State<FlashCardsScreen> createState() => _FlashCardsScreenState();
@@ -17,7 +17,7 @@ class _FlashCardsScreenState extends State<FlashCardsScreen> {
   int index = 0;
 
   void nextCard(int dir) {
-    if (dir > 0 && index < widget.words.length - 1) {
+    if (dir > 0 && index < appData.words.length - 1) {
       setState(() {
         index = index + dir;
       });
@@ -54,9 +54,9 @@ class _FlashCardsScreenState extends State<FlashCardsScreen> {
       screenWidth = MediaQuery.of(context).size.width;
     late String word;
     if (!flipped) {
-      word = widget.words[index].word;
+      word = appData.words[index].word;
     } else {
-      word = widget.words[index].translation;
+      word = appData.words[index].translation;
     }
 
     return Scaffold(

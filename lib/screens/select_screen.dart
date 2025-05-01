@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:path/path.dart';
+//import 'package:flutter_riverpod/flutter_riverpod.dart';
+//import 'package:path/path.dart';
 import 'package:untitled/main.dart';
-import 'package:untitled/providers/appbar_provider.dart';
+//import 'package:untitled/providers/appbar_provider.dart';
+import 'package:untitled/screens/flash_cards_screen.dart';
+import 'package:untitled/screens/spelling_screen.dart';
 import 'package:untitled/widgets/app_bar_widget.dart';
 import 'package:untitled/WordTranslation.dart';
 import 'package:untitled/providers/appData.dart';
@@ -10,8 +12,8 @@ import 'package:untitled/providers/appData.dart';
 import 'matching_screen.dart';
 
 class SelectScreen extends StatefulWidget{
-  const SelectScreen({super.key});
-
+  const SelectScreen({super.key, required this.screen});
+  final String screen;
   @override
   State<SelectScreen> createState() => _SelectScreenState();
 }
@@ -21,7 +23,6 @@ class _SelectScreenState extends State<SelectScreen> {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(screenWidth, 50),
@@ -57,8 +58,8 @@ class _SelectScreenState extends State<SelectScreen> {
          crossAxisAlignment: CrossAxisAlignment.center,
          mainAxisAlignment: MainAxisAlignment.center,
          children: [
-          examType("Selected"),
-           examType("Random")
+          examType("Selected", widget.screen),
+           examType("Random", widget.screen)
          ],
        ),
                Expanded(
@@ -79,23 +80,33 @@ class _SelectScreenState extends State<SelectScreen> {
 }
 class examType extends StatelessWidget{
   late String type;
-   examType(String type){
+  late String screen;
+   examType(String type,String screen){
      this.type = type;
+     this.screen = screen;
    }
   @override
   Widget build(BuildContext context) {
+    late Widget sc;
+    if (screen == "S"){
+      sc = SpellingScreen();
+    }else if(screen == "F"){
+      sc = FlashCardsScreen();
+    }else{
+      sc = Matching();
+    }
+
     return GestureDetector(
       onTap: (){
         if(type == "Random"){
           appData.selected = appData.words;
           appData.selected.shuffle();
           Navigator.pushReplacement(context, MaterialPageRoute(
-              builder: (context) => Matching()
-          ));}
+              builder: (context) => sc));}
         else{
-          if(appData.selected[0]!=null){
+          if(appData.selected.isNotEmpty){
           Navigator.pushReplacement(context, MaterialPageRoute(
-              builder: (context) => Matching()
+              builder: (context) => sc
           ));}
         }
 
