@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:untitled/WordTranslation.dart';
+import 'package:untitled/screens/flash_cards_screen.dart';
 import 'package:untitled/screens/select_screen.dart';
+import 'package:untitled/screens/spelling_screen.dart';
 import 'package:untitled/screens/store_screen.dart';
 
 class MainScreen extends StatelessWidget {
@@ -11,7 +14,9 @@ class MainScreen extends StatelessWidget {
       spacing: 40,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 40,),
+        const SizedBox(
+          height: 40,
+        ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 15),
           child: Text(
@@ -24,17 +29,41 @@ class MainScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             IconCard(
-
-              onTap: (){
-                Navigator.pushReplacement(context, MaterialPageRoute(
-                    builder: (context) => SelectScreen()
-                ));
+              onTap: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => SelectScreen()));
               },
               text: "Matching",
               imagePath: "lib/assets/images/match.png",
             ),
             IconCard(
-              onTap: ()=>print("jamil"),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FlashCardsScreen(
+                      words: [
+                        WordTranslation(
+                          "cart",
+                          "Auto"
+                        ),
+                        WordTranslation(
+                            "child",
+                            "Kid"
+                        ),
+                        WordTranslation(
+                            "Cat",
+                            "Caze"
+                        ),
+                        WordTranslation(
+                            "Cheese",
+                            "Kaze"
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
               text: "Flash Cards",
               imagePath: "lib/assets/images/flash-card.png",
             ),
@@ -45,15 +74,40 @@ class MainScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             IconCard(
-              onTap: ()=>print("jamil"),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SpellingScreen(
+                      words: [
+                        WordTranslation(
+                            "cat",
+                            "Auto"
+                        ),
+                        WordTranslation(
+                            "child",
+                            "Kid"
+                        ),
+                        WordTranslation(
+                            "Cat",
+                            "Caze"
+                        ),
+                        WordTranslation(
+                            "Cheese",
+                            "Kaze"
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
               text: "Spelling",
               imagePath: "lib/assets/images/spellcheck.png",
             ),
             IconCard(
               onTap: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(
-                    builder: (context) => StoreScreen()
-                ));
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => StoreScreen()));
               },
               text: "Store",
               imagePath: "lib/assets/images/cart.png",

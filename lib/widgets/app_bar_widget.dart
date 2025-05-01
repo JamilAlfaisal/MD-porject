@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled/providers/appbar_provider.dart';
 
-class AppBarWidget extends ConsumerWidget{
-  const AppBarWidget({super.key,required this.title});
+class AppBarWidget extends ConsumerStatefulWidget {
+  const AppBarWidget({super.key, required this.title});
   final String title;
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    //final double screenWidth = MediaQuery.of(context).size.width;
+  ConsumerState<AppBarWidget> createState() => _AppBarWidgetState();
+}
+
+class _AppBarWidgetState extends ConsumerState<AppBarWidget> {
+  @override
+  Widget build(BuildContext context) {
     final appData = ref.watch(appDataProvider);
     return Container(
       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
@@ -24,9 +29,7 @@ class AppBarWidget extends ConsumerWidget{
                   height: 25,
                   width: 30,
                 ),
-                SizedBox(
-                  width: 5,
-                ),
+                const SizedBox(width: 5),
                 Text(
                   "${appData.hearts}",
                   style: Theme.of(context).textTheme.titleLarge,
@@ -40,9 +43,7 @@ class AppBarWidget extends ConsumerWidget{
                   height: 25,
                   width: 30,
                 ),
-                SizedBox(
-                  width: 5,
-                ),
+                const SizedBox(width: 5),
                 Text(
                   "${appData.rubies}",
                   style: Theme.of(context).textTheme.titleLarge,
@@ -56,11 +57,9 @@ class AppBarWidget extends ConsumerWidget{
                   height: 25,
                   width: 30,
                 ),
-                SizedBox(
-                  width: 5,
-                ),
+                const SizedBox(width: 5),
                 Text(
-                  title,
+                  widget.title, // Access title via widget.
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ],

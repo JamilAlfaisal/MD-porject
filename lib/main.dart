@@ -31,6 +31,8 @@ class _MyAppState extends State<MyApp> {
     onPrimary: Color(0xffEB3131),
     //for edges and corners
     onSecondary: Color(0xffEB3131), //for fonts
+
+    onPrimaryContainer: Color(0xff31EB34),
   );
 
   ColorScheme blueTheme = ColorScheme.fromSeed(
@@ -43,6 +45,7 @@ class _MyAppState extends State<MyApp> {
     onPrimary: Color(0xff31CCEB),
     //for edges and corners
     onSecondary: Color(0xffEB3131), //for fonts
+    onPrimaryContainer: Color(0xff31EB34),
   );
 
   ColorScheme purpleTheme = ColorScheme.fromSeed(
@@ -55,6 +58,8 @@ class _MyAppState extends State<MyApp> {
     onPrimary: Color(0xffA431EB),
     //for edges and corners
     onSecondary: Color(0xffEB3131), //for fonts
+
+    onPrimaryContainer: Color(0xff31EB34),
   );
 
   @override
@@ -88,6 +93,7 @@ class _MyAppState extends State<MyApp> {
               color: color.onSecondary,
               fontSize: 15,
             )),
+
       ),
       debugShowCheckedModeBanner: false,
       home: Builder(
