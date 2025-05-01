@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path/path.dart';
 import 'package:untitled/main.dart';
 import 'package:untitled/providers/appbar_provider.dart';
 import 'package:untitled/widgets/app_bar_widget.dart';
@@ -64,15 +65,11 @@ class _SelectScreenState extends State<SelectScreen> {
                      itemBuilder: (context,index){
                         return WordBox(word: words[index]);
                      }),
-               )
-
+               ),
+        addBox()
          ]),
     );
-      Column(
-      children: [
-        Text("Choose Randomly or Selected Words",style: Theme.of(context).textTheme.titleLarge,)
-      ],
-    );
+
 
     // TODO: implement build
 
@@ -159,6 +156,51 @@ class _WordBoxState extends State<WordBox> {
     );
   }
 
+}
+class addBox extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: (){
+        openDialog(context);
+      },
+      child: Container(
+        alignment: Alignment.center,
+    decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(10),
+    color: Theme.of(context).colorScheme.primary,
+
+    ),
+        child: Text("Add a Word",style: Theme.of(context).textTheme.titleLarge,),
+    ));
+  }
+}
+Future<void> openDialog(BuildContext context) {
+  final textController = TextEditingController();
+
+  return showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text("Enter a word"),
+      content: TextField(
+        controller: textController,
+        decoration: InputDecoration(hintText: 'Enter a word'),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () {
+            final enteredText = textController.text;
+            Navigator.pop(context, enteredText); // Return the entered text
+          },
+          child: Text('OK'),
+        ),
+      ],
+    ),
+  );
 }
 
 
