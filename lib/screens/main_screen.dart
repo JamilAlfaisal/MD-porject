@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled/screens/select_screen.dart';
 import 'package:untitled/screens/store_screen.dart';
 
 class MainScreen extends StatelessWidget {
@@ -23,7 +24,12 @@ class MainScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             IconCard(
-              onTap: ()=>print("jamil"),
+
+              onTap: (){
+                Navigator.pushReplacement(context, MaterialPageRoute(
+                    builder: (context) => SelectScreen()
+                ));
+              },
               text: "Matching",
               imagePath: "lib/assets/images/match.png",
             ),
